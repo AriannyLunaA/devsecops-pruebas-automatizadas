@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        'hudson.plugins.sonar.SonarRunnerInstallation' 'sonar-scanner'
+        sonarScanner 'sonar-scanner'
     }
     stages {
         stage('Build') {
@@ -13,8 +13,11 @@ pipeline {
         stage('Analyze') {
             steps {
                 echo 'Ejecutando análisis estático con SonarQube...'
-                withSonarQubeEnv('sonar-server') {
-                    sh 'sonar-scanner -Dsonar.projectKey=proyecto-vulnerable -Dsonar.sources=.'
+                script {
+                    def scannerHome = tool 'sonar-scanner'
+                    withSonarQubeEnv('sonar-server') {
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=proyecto-vulnerable -Dsonar.sources=."
+                    }
                 }
             }
         }
