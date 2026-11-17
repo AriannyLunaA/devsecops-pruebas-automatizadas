@@ -13,7 +13,7 @@ pipeline {
                 script {
                     def scannerHome = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                     withSonarQubeEnv('sonar-server') {
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=proyecto-vulnerable -Dsonar.sources=."
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=proyecto-vulnerable -Dsonar.sources=. -Dsonar.login=squ_620e84023a96e3086c673ee8ac562e24e53f3e32"
                     }
                 }
             }
